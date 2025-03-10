@@ -1,0 +1,100 @@
+//Task 2
+def div(a: Double, b: Double): Double = a / b
+
+dev curriedDiv(a: Double)(b: Double): Double = a / b
+
+div(10) //errore
+
+curriedDiv(10)
+
+res3(2)
+res3(3)
+res3(4)
+
+
+//Task 3.a
+def positive(x: Int): String = x match
+ | case x if x > 0 => "positive"
+ | case x if x < 0 => "negative"
+
+def positive(x: Int): String = x match
+     | case n if n > 0 => "positive"
+     | case n if n < 0 => "negative"
+
+def positive(x: Int): String = x match
+     | case n if n > 0 => "positive"
+     | case c if c < 0 => "negative"
+
+//Tutti uguali
+
+val x = 10
+
+val positive = x match
+     | case x if x > 0 => "positive"
+     | case x if x < 0 => "negative"
+
+val positive = 10 match
+     | case x if x > 0 => "positive"
+     | case x if x < 0 => "negative"
+
+val positive = -10 match
+     | case x if x > 0 => "positive"
+     | case x if x < 0 => "negative"
+
+//Task 3.b
+//Metodo
+def neg(p: String => Boolean): String => Boolean = ???
+
+//Tentativo fallimentare
+def neg(p: String => Boolean): String => Boolean = p match
+ | case s if p(s) => False
+ | case s if !p(s) => True
+
+def neg(p: String => Boolean): String => Boolean = s => !p(s)
+
+neg(empty)
+neg(empty)("") //false
+neg(empty)("f") //true
+
+//Val
+val neg2: (String => Boolean) => (String => Boolean) = ???
+
+val neg2: (String => Boolean) => (String => Boolean) = p => s => !p(s)
+neg2(empty)("")
+neg2(empty)("5")
+
+val notEmpty = neg(empty)
+notEmpty("foo") && !notEmpty("")
+
+//Task 3.c
+def neg[A](p: A => Boolean): (A => Boolean) = s => !p(s)
+val pos: Int => Boolean = _ > 0
+neg(pos)(1)
+neg(pos)(-1)
+
+//Task 4
+val p1: Int => Int => Int => Boolean = x => y => z => x <= y && y == z
+
+p1(10,100,100) //Pensavo si potesse fare
+p1(10)(100)(100)
+p1(10)(100)(101)
+p1(10)(9)(101)
+p1(10)(9)(9)
+p1(10)(10)(10)
+p1(10)(11)(11)
+
+val p2: (Int, Int, Int) => Boolean = (x,y,z) => x <= y && y == z
+
+def p3(x: Int)(y: Int)(z: Int): Boolean = x <= y && y == z
+
+def p4(x: Int, y: Int, z: Int): Boolean = x <= y && y == z
+
+//Task 5
+def compose(f: Int => Int, g: Int => Int): Int => Int = x => f(g(x))
+compose(_ - 1, _ * 2)(5) //9
+
+def compose[A, B, C](f: B => C, g: A => B): A => C = x => f(g(x))
+
+//Task 6
+def composeThree[A,B,C,D](f: C => D, g: B => C, h: A => B): A => D = x => f(g(h(x)))
+composeThree[Int, Int, String, String](_ + "!", _.toString, _ * 2)(3) //6!
