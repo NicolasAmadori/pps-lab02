@@ -118,3 +118,9 @@ power(3,3)
 
 //Task 8
 
+def reverseNumber(n: Int): Int =
+    @annotation.tailrec
+    def _reverse(n: Int, i: Int, acc: Int) = n match
+        | case 0 => acc
+        | case n if n > 0 && n < 9 => _reverse(n / 10, i + 1,  acc + (n % 10) * i)
+    _reverse(n, 1, 0)
