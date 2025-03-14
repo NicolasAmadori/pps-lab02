@@ -105,12 +105,12 @@ def power(base: Double, exponent: Int): Double = exponent match
      | case 0 => 1
      | case n if n > 0 => power(base, exponent-1) * base
 
-//Tail (non riuscito a testarlo, non mi fa andare a capo)
+//Tail
 def power(base: Double, exponent: Int): Double =
     @annotation.tailrec
     def _power(b: Double, e: Int, acc: Double): Double = e match
         | case 0 => acc
-        | case n if n > 0 => power(b, e-1, acc * b)
+        | case n if n > 0 => _power(b, e-1, acc * b)
     _power(base, exponent, 1)
 
 power(3,4)
@@ -120,7 +120,9 @@ power(3,3)
 
 def reverseNumber(n: Int): Int =
     @annotation.tailrec
-    def _reverse(n: Int, i: Int, acc: Int) = n match
+    def _reverse(n: Int, acc: Int): Int = n match
         | case 0 => acc
-        | case n if n > 0 && n < 9 => _reverse(n / 10, i + 1,  acc + (n % 10) * i)
-    _reverse(n, 1, 0)
+        | case n => _reverse(n / 10, acc * 10 + (n % 10))
+    _reverse(n, 0)
+
+//Task 9
